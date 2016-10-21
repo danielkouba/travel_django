@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		label{
+			display:block;
+		}
+	</style>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'formv/css/style.css'%}">
+
+</head>
+<body>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+	<div class="wrapper">
+		<div class="col bbx">
+			<form action="/register" method="POST">
+				<fieldset>
+					<legend>Register</legend>
+					{% csrf_token %}
+					<label> Name:
+						<input type="text" name="name">
+					</label>
+					<label> Username:
+						<input type="text" name="username">
+					</label>
+					<label> Password:
+						<input type="text" name="password">
+					</label>
+					<label> Confirm Password:
+						<input type="text" name="passconf">
+					</label>
+					<input type="submit" value="Register">
+				</fieldset>
+			</form>
+		</div>
+		<div class="col bbx">
+			<form action="/login" method="POST">
+				<fieldset>
+					<legend>Login</legend>
+					{% csrf_token %}
+					<label>Username:
+					<input type="text" name="username">
+					</label>
+					<label>Password:
+					<input type="text" name="password">
+					</label>
+					<input type="submit" value="Login">
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

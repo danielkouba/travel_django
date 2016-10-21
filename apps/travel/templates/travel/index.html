@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'travel/css/style.css' %}">
+
+</head>
+<body>
+
+
+<div class="wrapper">
+<header>
+		<!-- Making a reverse link looks like this -->
+	<a href="{% url 'user:logout' %}">Logout</a>
+
+</header>
+
+
+	<h1 class="debug">Hello {{user.name}}</h1>
+
+		{% if messages %}
+			<ul class="messages">
+			    {% for message in messages %}
+			    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+			        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+			        {{ message }}
+			    </li>
+			    {% endfor %}
+			</ul>
+		{% endif %}
+
+	<h2>Your Travel Plans</h2>
+	<table>
+		<tr>
+			<th>Destination</th>
+			<th>Start Date</th>
+			<th>End Date</th>
+			<th>Plan</th>
+		</tr>
+		
+
+			{% for myplan in userplans %}
+			<tr>
+				<td><a href="{{myplan.id}}/info">{{myplan.destination}}</a></td>
+				<td>{{myplan.datestart}}</td>
+				<td>{{myplan.dateend}}</td>
+				<td>{{myplan.description}}</td>
+			</tr>
+			{% endfor %}
+	</table>
+
+	<h2>Other users' travel plans</h2>
+		<table>
+			<tr>
+				<th>Destination</th>
+				<th>Planner</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Plan</th>
+				<th>Action</th>
+			</tr>
+
+				{% for travel in travelplans %}
+				<tr>
+					<td><a href="{{travel.id}}/info">{{travel.destination}}</a></td>
+					<td>{{travel.planner.name}}</td>
+					<td>{{travel.datestart}}</td>
+					<td>{{travel.dateend}}</td>
+					<td>{{travel.description}}</td>
+					<td><a href="{% url 'travels:joinTravel' travel.id %}">Join</a></td>
+				</tr>
+				{% endfor %}
+		</table>
+		<a href="create">Create A New Trip</a>
+</div>
+</body>
+</html>

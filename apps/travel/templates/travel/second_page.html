@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'app_name/css/style.css' %}">
+
+</head>
+<body>
+
+
+<div class="wrapper">
+<header>
+		<!-- Making a reverse link looks like this -->
+	<a href="{% url 'app_name:index' %}">Logout</a>
+	<a href="{% url 'app_name:second' %}">Second</a>
+
+</header>
+
+
+		{% if messages %}
+			<ul class="messages">
+			    {% for message in messages %}
+			    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+			        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+			        {{ message }}
+			    </li>
+			    {% endfor %}
+			</ul>
+		{% endif %}
+
+
+	<h1 class="debug">Hello World</h1>
+</div>
+</body>
+</html>
